@@ -1,0 +1,16 @@
+img{
+  width: 50vw;
+  height: 100vh;
+  
+}
+.bottom{
+  position: absolute;
+  bottom: 4vh;
+  left: 2vw;
+  color: white;
+  font-weight: 900;
+  width:695px;
+  height:143px;
+  font-size: 55px;
+  font-family: "Roboto";
+  }

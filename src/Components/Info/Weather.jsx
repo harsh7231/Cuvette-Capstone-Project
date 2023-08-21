@@ -1,0 +1,70 @@
+import { useEffect, useState } from "react"
+
+const Weather = ()=>{
+    const [date, setDate] = useState("")
+    const [time, setTime] = useState("")
+    const [weather, setWeather] = useState(false)
+    // console.log(weather)
+    useEffect(()=>{
+        const fetchWeather = async()=>{
+            await fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-07-19&sortBy=publishedAt&apiKey=8adff1ef83804cc1a6d7746b14b654bf")
+                .then(async(data)=>await data.json()).then((data)=>setWeather(data)) 
+        }
+        fetchWeather()
+    },[])
+    useEffect(()=>{
+        const date = new Date
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        setTime(strTime)
+    })
+    useEffect(()=>{
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1; // Months start at 0!
+        let dd = today.getDate();
+
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+
+        const formattedToday = dd + '-' + mm + '-' + yyyy;
+        setDate(formattedToday)
+    })
+    return (
+        <div style={{width:"30.5vw",minHeight:"20vh",background:'#101744',borderRadius:"12px", marginTop:"5px"}}>
+            <div style={{height:"7vh", background:"#FF4ADE", borderRadius:"12px", color:"white",display:"flex", justifyContent:"space-evenly", alignItems:"center", fontSize:"2rem"}}>
+                <span>{date}</span>
+                <span>{time}</span>
+            </div>
+            <div>
+                {weather ?<div style={{display:"flex", color:"white", alignItems:"center", justifyContent:"space-evenly"}}> <div>
+                    <img src={weather.current.condition.icon} style={{marginTop:"15px",width:"50px",height:"50px"}}/>
+                    <p style={{fontSize:"25px"}}>{weather.current.condition.text}</p>
+                </div>
+                <div>
+                   <p style={{marginBottom:"12px", fontSize:"30px",marginTop:"10px"}}><span>{weather.current.temp_c}</span>°C</p>
+                    <p style={{fontSize:"25px"}}>{weather.current.pressure_mb} pressure</p>
+                </div>
+                <div>
+                    <p style={{marginBottom:"12px", fontSize:"30px", marginTop:"10px"}}>{weather.current.wind_kph} wind</p>
+                    <p style={{fontSize:"25px"}}>{weather.current.humidity} humidity</p>
+                </div></div>:<></>}
+              </div>
+        </div>
+    )
+}
+
+export default Weather
+
+
+
+//current.condition.icon, text
+//current.temp_c
+//current.pressure_mb
+//current.wind_kph
+//current.humidity
