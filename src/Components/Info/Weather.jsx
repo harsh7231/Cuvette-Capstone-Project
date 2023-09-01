@@ -7,7 +7,7 @@ const Weather = ()=>{
     // console.log(weather)
     useEffect(()=>{
         const fetchWeather = async()=>{
-            await fetch("https://newsapi.org/v2/everything?q=tesla&from=2023-07-19&sortBy=publishedAt&apiKey=8adff1ef83804cc1a6d7746b14b654bf")
+            await fetch("http://api.weatherapi.com/v1/current.json?key=987de39fe8924052ada80850232502&q=London&aqi=no")
                 .then(async(data)=>await data.json()).then((data)=>setWeather(data)) 
         }
         fetchWeather()
